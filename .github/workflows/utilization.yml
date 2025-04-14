@@ -1,0 +1,46 @@
+name: Weekly Utilization Sync
+
+on:
+  schedule:
+    - cron: '0 19 * * 5'  # Every Friday at 3PM ET
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-utilization-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pandas openpyxl tqdm requests
+
+    - name: Run get_util_data.py
+      run: |
+        python Scripts/get_util_data.py
+
+    - name: Run salesforce_util_upload.py
+      run: |
+        python Scripts/salesforce_util_upload.py
+
+    - name: Set up Git identity
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+
+    - name: Commit and push updated utilization data
+      run: |
+        git add Output/utilization_data*.csv
+        git commit -m "📈 Weekly utilization data sync for $(date +'%Y-%m-%d')" || echo "No changes to commit"
+        git push
