@@ -46,7 +46,7 @@ if token_exch_response.status_code == 200:
             "Content-Type": "application/json"
         }
 
-        consolidated_file = 'C:/Python Path/Util/History/utilization_data.csv'
+        consolidated_file = 'Output/utilization_data.csv'
         account_updates = {}
         today_date = datetime.now().date().isoformat()
 
