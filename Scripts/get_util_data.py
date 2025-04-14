@@ -18,7 +18,7 @@ ORG_URL = 'https://api-v2.7signal.com/organizations'
 AUTH_URL = 'https://api-v2.7signal.com/oauth2/token'
 
 # Excel file containing customer details
-EXCEL_PATH = "C:/Python Path/Customer_Data.xlsx"
+EXCEL_PATH = "Customer_Data.xlsx"
 MASTER_OUTPUT_FILE = "utilization_data"
 
 # Read the customer details from the spreadsheet
@@ -270,7 +270,7 @@ if data_list:
 
 
     # Create a new directory to save the files
-    output_dir = 'History'
+    output_dir = 'Output'
     os.makedirs(output_dir, exist_ok=True)
 
     # Save the DataFrame to two new CSV files in the new directory
